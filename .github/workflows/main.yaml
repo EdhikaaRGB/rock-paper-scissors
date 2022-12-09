@@ -33,7 +33,7 @@ jobs:
       - name: Step 3 - Build RPS web app with Maven and copy the artifacts from target folder
         run: | 
           mvn -B package --file pom.xml
-          mkdir staging && cp tartget/*.jar staging
+          mkdir staging && cp target/*.jar staging
           
       - name: Step 4 - Checkout all the files
         run: ls -la 
