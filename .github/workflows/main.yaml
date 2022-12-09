@@ -61,14 +61,8 @@ jobs:
       - name: Step 3 - Build onlinebookstore web app with Maven
         run: mvn -B package --file pom.xml
           
-      - name: Step 4 - Checkout all the files
-        run: ls -la 
       
-      - name: What is in the Target folder
-        run: |
-          cd target 
-          ls -la
-      - name: Step 5 - List Environment Variables
+      - name: Step 4 - List Environment Variables
         run: env
 
   build-on-macos:
