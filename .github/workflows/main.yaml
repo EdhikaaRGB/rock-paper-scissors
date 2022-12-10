@@ -38,6 +38,7 @@ jobs:
 #For the first time maven will store all the depencencies inside the cache memory 
 #and when next time it will run then the execution will be faster
       - name: Step 4 - Set up Maven Cache
+        uses: actions/cache@v2
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
