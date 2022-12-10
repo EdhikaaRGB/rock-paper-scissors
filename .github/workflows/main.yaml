@@ -1,12 +1,14 @@
-# This is for build the rock paper sessior project using maven
+# This is for build the Rock Paper seassor project using maven
+#We do not want to download all the maven dependency everytime. 
+# So we are going to cache the maven dependency
 
-name: build with GitHub Action
+name: build with GitHub Action in and download the artifact
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
 on:
   push:
-    branches: [master]
+    branches: [test-3]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -29,8 +31,17 @@ jobs:
         with: 
           java-version: 1.8
 
-      - name: Step 3 - Build RPS web app with Maven
-        run: mvn -B package --file pom.xml
+      - name: Step 3 - Build RPS web app with Maven and copy the artifacts from target folder
+        run: | 
+          mvn -B package --file pom.xml
+          mkdir staging && cp tartget/*.jar staging
+#For the first time maven will store all the depencencies inside the cache memory 
+#and when next time it will run then the execution will be faster
+      - name: Step 4 - Set up Maven Cache
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
           
       - name: Step 4 - Checkout all the files
         run: ls -la 
@@ -39,4 +50,12 @@ jobs:
         run: |
           cd target 
           ls -la 
+      - name: Step 5 - List Environment Variables
+        run: env
+
+      - name: Step 6 - Store artifact
+        uses: actions/upload-artifact@v2 
+        with:
+          name: github-action-artifact
+          path: staging 
   
