@@ -34,7 +34,7 @@ jobs:
       - name: Step 3 - Build RPS web app with Maven and copy the artifacts from target folder
         run: | 
           mvn -B package --file pom.xml
-          mkdir staging && cp tartget/*.jar staging
+          mkdir staging && cp target/*.jar staging
 #For the first time maven will store all the depencencies inside the cache memory 
 #and when next time it will run then the execution will be faster
       - name: Step 4 - Set up Maven Cache
